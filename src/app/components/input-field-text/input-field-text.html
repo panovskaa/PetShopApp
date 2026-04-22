@@ -1,0 +1,4 @@
+<div class="form-group py-2">
+  <label [for]="inputId()">{{ inputName() }}</label>
+  <input type="text" class="form-control" [id]="inputId()" (keyup)="onTypeEvent($event)" />
+</div>

@@ -1,0 +1,513 @@
+<main class="listing-wrap" id="main-content">
+
+  <!-- SUCCESS STATE -->
+  <div *ngIf="submitSuccess" class="success-banner" role="alert" aria-live="assertive" tabindex="-1">
+    <div class="success-icon">🌸</div>
+    <h2>Listing Created!</h2>
+    <p>Your pet listing has been submitted. Loving families will be in touch soon.</p>
+    <button class="btn-primary" (click)="resetForm()">Create Another Listing</button>
+  </div>
+
+  <!-- FORM -->
+  <div *ngIf="!submitSuccess">
+    <div class="listing-hero">
+      <span class="listing-flower">🌸</span>
+      <h1>Create a Listing</h1>
+      <p>Help your pet find their forever home by sharing their story.</p>
+    </div>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      novalidate
+      aria-label="Create a pet listing"
+      class="listing-form"
+    >
+
+      <!-- ── SECTION 1: PET INFO ── -->
+      <fieldset formGroupName="petInfo" class="form-section">
+        <legend class="section-legend">
+          <span class="legend-num">01</span> About the Pet
+        </legend>
+
+        <div class="fields-grid">
+
+          <!-- Pet Type -->
+          <div class="field-group">
+            <label for="petType" class="field-label">
+              Pet Type <span aria-hidden="true" class="required-star">*</span>
+            </label>
+            <select
+              id="petType"
+              formControlName="petType"
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid(petInfo, 'petType')"
+              aria-describedby="petType-error"
+              class="field-input"
+              [class.input-error]="isInvalid(petInfo, 'petType')"
+            >
+              <option value="" disabled>Select type</option>
+              <option *ngFor="let t of petTypes" [value]="t.toLowerCase()">{{ t }}</option>
+            </select>
+            <span
+              *ngIf="isInvalid(petInfo, 'petType')"
+              id="petType-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(petInfo, 'petType') }}</span>
+          </div>
+
+          <!-- Breed -->
+          <div class="field-group">
+            <label for="breed" class="field-label">
+              Breed <span aria-hidden="true" class="required-star">*</span>
+            </label>
+            <input
+              id="breed"
+              type="text"
+              formControlName="breed"
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid(petInfo, 'breed')"
+              aria-describedby="breed-error"
+              class="field-input"
+              [class.input-error]="isInvalid(petInfo, 'breed')"
+              placeholder="e.g. Golden Retriever"
+            />
+            <span
+              *ngIf="isInvalid(petInfo, 'breed')"
+              id="breed-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(petInfo, 'breed') }}</span>
+          </div>
+
+          <!-- Name -->
+          <div class="field-group">
+            <label for="petName" class="field-label">
+              Pet's Name <span aria-hidden="true" class="required-star">*</span>
+            </label>
+            <input
+              id="petName"
+              type="text"
+              formControlName="name"
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid(petInfo, 'name')"
+              aria-describedby="petName-error"
+              class="field-input"
+              [class.input-error]="isInvalid(petInfo, 'name')"
+              placeholder="e.g. Buddy"
+            />
+            <span
+              *ngIf="isInvalid(petInfo, 'name')"
+              id="petName-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(petInfo, 'name') }}</span>
+          </div>
+
+          <!-- Age -->
+          <div class="field-group">
+            <label for="age" class="field-label">
+              Age (years) <span aria-hidden="true" class="required-star">*</span>
+            </label>
+            <input
+              id="age"
+              type="number"
+              formControlName="age"
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid(petInfo, 'age')"
+              aria-describedby="age-error"
+              class="field-input"
+              [class.input-error]="isInvalid(petInfo, 'age')"
+              min="0"
+              max="30"
+              placeholder="e.g. 3"
+            />
+            <span
+              *ngIf="isInvalid(petInfo, 'age')"
+              id="age-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(petInfo, 'age') }}</span>
+          </div>
+
+          <!-- Size -->
+          <div class="field-group">
+            <label for="size" class="field-label">
+              Size <span aria-hidden="true" class="required-star">*</span>
+            </label>
+            <select
+              id="size"
+              formControlName="size"
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid(petInfo, 'size')"
+              aria-describedby="size-error"
+              class="field-input"
+              [class.input-error]="isInvalid(petInfo, 'size')"
+            >
+              <option value="" disabled>Select size</option>
+              <option *ngFor="let s of sizes" [value]="s.toLowerCase()">{{ s }}</option>
+            </select>
+            <span
+              *ngIf="isInvalid(petInfo, 'size')"
+              id="size-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(petInfo, 'size') }}</span>
+          </div>
+
+          <!-- Color -->
+          <div class="field-group">
+            <label for="color" class="field-label">Color / Markings</label>
+            <input
+              id="color"
+              type="text"
+              formControlName="color"
+              class="field-input"
+              placeholder="e.g. Golden with white patch"
+            />
+          </div>
+
+        </div>
+
+        <!-- Gender — radio group -->
+        <div class="field-group" role="group" aria-labelledby="gender-label">
+          <span id="gender-label" class="field-label">
+            Gender <span aria-hidden="true" class="required-star">*</span>
+          </span>
+          <div class="radio-row">
+            <label *ngFor="let g of genders" class="radio-label">
+              <input
+                type="radio"
+                formControlName="gender"
+                [value]="g.toLowerCase()"
+                class="radio-input"
+                aria-required="true"
+              />
+              <span class="radio-pill">{{ g }}</span>
+            </label>
+          </div>
+          <span
+            *ngIf="isInvalid(petInfo, 'gender')"
+            class="field-error"
+            role="alert"
+            aria-live="polite"
+          >{{ getError(petInfo, 'gender') }}</span>
+        </div>
+
+      </fieldset>
+
+      <!-- ── SECTION 2: HEALTH ── -->
+      <fieldset formGroupName="healthInfo" class="form-section">
+        <legend class="section-legend">
+          <span class="legend-num">02</span> Health &amp; Documents
+        </legend>
+
+        <div class="checkbox-grid">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="hasCertificate" class="checkbox-input" />
+            <span class="checkbox-custom" aria-hidden="true"></span>
+            Has health certificate
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="isVaccinated" class="checkbox-input" />
+            <span class="checkbox-custom" aria-hidden="true"></span>
+            Vaccinated
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="isNeutered" class="checkbox-input" />
+            <span class="checkbox-custom" aria-hidden="true"></span>
+            Neutered / Spayed
+          </label>
+        </div>
+
+        <div class="field-group" style="margin-top: 20px;">
+          <label for="healthNotes" class="field-label">Health Notes</label>
+          <textarea
+            id="healthNotes"
+            formControlName="healthNotes"
+            class="field-input field-textarea"
+            [attr.aria-invalid]="isInvalid(healthInfo, 'healthNotes')"
+            aria-describedby="healthNotes-error"
+            placeholder="Any allergies, conditions, medications or vet history..."
+            rows="4"
+          ></textarea>
+          <span
+            *ngIf="isInvalid(healthInfo, 'healthNotes')"
+            id="healthNotes-error"
+            class="field-error"
+            role="alert"
+            aria-live="polite"
+          >{{ getError(healthInfo, 'healthNotes') }}</span>
+        </div>
+
+      </fieldset>
+
+      <!-- ── SECTION 3: PHOTOS ── -->
+      <fieldset class="form-section">
+        <legend class="section-legend">
+          <span class="legend-num">03</span> Photos
+          <span class="legend-hint">(at least one required)</span>
+        </legend>
+
+        <!-- Toggle -->
+        <div class="photo-toggle" role="group" aria-label="Photo input method">
+          <button
+            type="button"
+            class="toggle-btn"
+            [class.active]="photoInputMode === 'file'"
+            (click)="photoInputMode = 'file'"
+            aria-pressed="{{ photoInputMode === 'file' }}"
+          >Upload File</button>
+          <button
+            type="button"
+            class="toggle-btn"
+            [class.active]="photoInputMode === 'url'"
+            (click)="photoInputMode = 'url'"
+            aria-pressed="{{ photoInputMode === 'url' }}"
+          >Add URL</button>
+        </div>
+
+        <!-- File upload -->
+        <div *ngIf="photoInputMode === 'file'" class="upload-zone">
+          <label for="photoFile" class="upload-label">
+            <span class="upload-icon">📷</span>
+            <span>Click to upload photos</span>
+            <span class="upload-hint">JPG, PNG, WEBP accepted</span>
+            <input
+              id="photoFile"
+              type="file"
+              accept="image/*"
+              multiple
+              class="upload-input"
+              aria-label="Upload pet photos"
+              (change)="onFileSelected($event)"
+            />
+          </label>
+        </div>
+
+        <!-- URL input -->
+        <div *ngIf="photoInputMode === 'url'" class="url-row">
+          <input
+            type="url"
+            [formControl]="urlInput"
+            class="field-input"
+            placeholder="https://example.com/photo.jpg"
+            aria-label="Photo URL"
+            [class.input-error]="urlInput.invalid && urlInput.dirty"
+          />
+          <button
+            type="button"
+            class="btn-secondary"
+            (click)="addPhotoUrl()"
+            [disabled]="urlInput.invalid || !urlInput.value"
+          >Add</button>
+        </div>
+
+        <!-- Previews -->
+        <div *ngIf="photoEntries.length > 0" class="photo-previews" role="list" aria-label="Added photos">
+          <div
+            *ngFor="let photo of photoEntries; let i = index"
+            class="photo-preview"
+            role="listitem"
+          >
+            <img [src]="photo.preview" [alt]="'Photo ' + (i + 1)" class="preview-img" />
+            <button
+              type="button"
+              class="remove-photo"
+              (click)="removePhoto(i)"
+              [attr.aria-label]="'Remove photo ' + (i + 1)"
+            >×</button>
+          </div>
+        </div>
+
+        <span
+          *ngIf="submitted && photos.invalid"
+          class="field-error"
+          role="alert"
+          aria-live="polite"
+        >Please add at least one photo.</span>
+
+      </fieldset>
+
+      <!-- ── SECTION 4: LISTING INFO ── -->
+      <fieldset formGroupName="listingInfo" class="form-section">
+        <legend class="section-legend">
+          <span class="legend-num">04</span> Listing Details
+        </legend>
+
+        <div class="fields-grid">
+
+          <!-- Title -->
+          <div class="field-group" style="grid-column: 1 / -1;">
+            <label for="title" class="field-label">
+              Listing Title <span aria-hidden="true" class="required-star">*</span>
+            </label>
+            <input
+              id="title"
+              type="text"
+              formControlName="title"
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid(listingInfo, 'title')"
+              aria-describedby="title-error"
+              class="field-input"
+              [class.input-error]="isInvalid(listingInfo, 'title')"
+              placeholder="e.g. Gentle golden retriever looking for a loving home"
+            />
+            <span
+              *ngIf="isInvalid(listingInfo, 'title')"
+              id="title-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(listingInfo, 'title') }}</span>
+          </div>
+
+          <!-- Description -->
+          <div class="field-group" style="grid-column: 1 / -1;">
+            <label for="description" class="field-label">
+              Description <span aria-hidden="true" class="required-star">*</span>
+            </label>
+            <textarea
+              id="description"
+              formControlName="description"
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid(listingInfo, 'description')"
+              aria-describedby="description-error"
+              class="field-input field-textarea"
+              [class.input-error]="isInvalid(listingInfo, 'description')"
+              placeholder="Tell potential adopters about the pet's personality, habits, favourite things..."
+              rows="5"
+            ></textarea>
+            <span
+              *ngIf="isInvalid(listingInfo, 'description')"
+              id="description-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(listingInfo, 'description') }}</span>
+          </div>
+
+          <!-- Location -->
+          <div class="field-group">
+            <label for="location" class="field-label">
+              Location <span aria-hidden="true" class="required-star">*</span>
+            </label>
+            <input
+              id="location"
+              type="text"
+              formControlName="location"
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid(listingInfo, 'location')"
+              aria-describedby="location-error"
+              class="field-input"
+              [class.input-error]="isInvalid(listingInfo, 'location')"
+              placeholder="e.g. Skopje, MK"
+            />
+            <span
+              *ngIf="isInvalid(listingInfo, 'location')"
+              id="location-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(listingInfo, 'location') }}</span>
+          </div>
+
+          <!-- Rehoming Fee -->
+          <div class="field-group">
+            <label for="rehomingFee" class="field-label">Rehoming Fee (MKD)</label>
+            <input
+              id="rehomingFee"
+              type="number"
+              formControlName="rehomingFee"
+              [attr.aria-invalid]="isInvalid(listingInfo, 'rehomingFee')"
+              aria-describedby="fee-error"
+              class="field-input"
+              [class.input-error]="isInvalid(listingInfo, 'rehomingFee')"
+              min="0"
+              placeholder="0"
+            />
+            <span
+              *ngIf="isInvalid(listingInfo, 'rehomingFee')"
+              id="fee-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(listingInfo, 'rehomingFee') }}</span>
+          </div>
+
+          <!-- Email -->
+          <div class="field-group">
+            <label for="contactEmail" class="field-label">
+              Contact Email <span aria-hidden="true" class="required-star">*</span>
+            </label>
+            <input
+              id="contactEmail"
+              type="email"
+              formControlName="contactEmail"
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid(listingInfo, 'contactEmail')"
+              aria-describedby="email-error"
+              class="field-input"
+              [class.input-error]="isInvalid(listingInfo, 'contactEmail')"
+              placeholder="you@example.com"
+            />
+            <span
+              *ngIf="isInvalid(listingInfo, 'contactEmail')"
+              id="email-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(listingInfo, 'contactEmail') }}</span>
+          </div>
+
+          <!-- Phone -->
+          <div class="field-group">
+            <label for="contactPhone" class="field-label">Contact Phone</label>
+            <input
+              id="contactPhone"
+              type="tel"
+              formControlName="contactPhone"
+              [attr.aria-invalid]="isInvalid(listingInfo, 'contactPhone')"
+              aria-describedby="phone-error"
+              class="field-input"
+              [class.input-error]="isInvalid(listingInfo, 'contactPhone')"
+              placeholder="+389 70 000 000"
+            />
+            <span
+              *ngIf="isInvalid(listingInfo, 'contactPhone')"
+              id="phone-error"
+              class="field-error"
+              role="alert"
+              aria-live="polite"
+            >{{ getError(listingInfo, 'contactPhone') }}</span>
+          </div>
+
+        </div>
+      </fieldset>
+
+      <!-- SUBMIT -->
+      <div class="form-submit">
+        <p class="required-note" aria-hidden="true">
+          <span class="required-star">*</span> Required fields
+        </p>
+        <button
+          type="submit"
+          class="btn-primary btn-submit"
+          [disabled]="form.invalid && submitted"
+          [attr.aria-disabled]="form.invalid && submitted"
+        >
+          <span class="submit-flower">🌸</span>
+          Create Listing
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</main>

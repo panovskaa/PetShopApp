@@ -1,0 +1,21 @@
+<nav class="navbar" [class.scrolled]="isScrolled">
+  <a routerLink="/" class="navbar-brand">
+    <span class="brand-flower">🌸</span>
+    <span class="brand-name">Kindred</span>
+  </a>
+  <div class="navbar-links">
+    <a routerLink="/lost-pet" class="nav-link">Lost Pet</a>
+    <a routerLink="/adopt" class="nav-link">Adopt</a>
+    <a routerLink="/create-listing" class="nav-link">Create Listing</a>
+  </div>
+  <button class="nav-appt-btn">Request an Appointment</button>
+  <div class="hamburger" [class.open]="menuOpen" (click)="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="slide-menu" [class.open]="menuOpen" (mouseleave)="closeMenu()">
+    <a routerLink="/lost-pet" (click)="toggleMenu()">Lost Pet</a>
+    <a routerLink="/adopt" (click)="toggleMenu()">Adopt</a>
+    <a routerLink="/create-listing" (click)="toggleMenu()">Create Listing</a>
+    <p>Connecting pets with loving families across the community.</p>
+  </div>
+</nav>

@@ -1,0 +1,6 @@
+<select [id]="selectId()" class="form-select py-2" (change)="onChangeEvent($event)">
+  <option selected>Select listing type</option>
+  @for (item of optionValues(); track $index) {
+    <option [value]="item.value">{{ item.name }}</option>
+  }
+</select>
