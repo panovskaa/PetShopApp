@@ -13,6 +13,7 @@ app-footer {
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  box-sizing: border-box;
 }
 
 .footer-info-grid {
@@ -46,4 +47,49 @@ app-footer {
   font-size: 0.6rem;
   letter-spacing: 0.12em;
   color: rgba(255, 255, 255, 0.45);
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .kindred-footer {
+    padding: 2.5rem 2.5rem 1.75rem;
+  }
+
+  .footer-info-grid {
+    gap: 3rem;
+  }
+}
+
+/* Large mobile — stack to 2 columns */
+@media (max-width: 680px) {
+  .kindred-footer {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .footer-info-grid {
+    grid-template-columns: auto auto;
+    gap: 2rem 3rem;
+  }
+}
+
+/* Small mobile — single column */
+@media (max-width: 420px) {
+  .kindred-footer {
+    padding: 2rem 1.25rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .footer-info-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .footer-col-title {
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-col p {
+    font-size: 0.85rem;
+    line-height: 2;
+  }
 }
