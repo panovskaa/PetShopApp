@@ -24,14 +24,13 @@ export class PetDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-  window.scrollTo(0, 0); // Add this line
-  const id = this.route.snapshot.paramMap.get('id');
-  if (id) {
-    this.supabase.getListingById(id)
-      .then(data => { this.pet = data; this.loading = false; })
-      .catch(() => { this.loading = false; });
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.supabase.getListingById(id)
+        .then(data => { this.pet = data; this.loading = false; })
+        .catch(() => { this.loading = false; });
+    }
   }
-}
 
   get photos(): string[] {
     if (!this.pet?.photos) return [];

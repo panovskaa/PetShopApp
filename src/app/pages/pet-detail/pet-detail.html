@@ -10,13 +10,10 @@
     <div class="adopted-icon">🌸</div>
     <h2>Congratulations!</h2>
     <p>You've given {{ pet.pet_name }} a forever home. Thank you for adopting!</p>
-    <button class="btn-back" (click)="goBack()">Back to home</button>
   </div>
 
   <!-- PET DETAIL -->
   <div *ngIf="!loading && !adopted && pet" class="pet-detail">
-
-    <button class="btn-back-top" (click)="goBack()">← Back</button>
 
     <div class="pet-layout">
 
@@ -82,10 +79,13 @@
           <p class="section-text" *ngIf="pet.contact_email">{{ pet.contact_email }}</p>
           <p class="section-text" *ngIf="pet.contact_phone">{{ pet.contact_phone }}</p>
         </div>
-
-        <button class="btn-adopt" (click)="adopt()" [disabled]="adopting">
-          {{ adopting ? 'Processing...' : '🌸 Adopt ' + pet.pet_name }}
-        </button>
+        
+        <div class="btn-actions">
+            <button class="btn-back-inline" (click)="goBack()">← Back</button>
+            <button class="btn-adopt" (click)="adopt()" [disabled]="adopting">
+                {{ adopting ? 'Adopting...' : 'Adopt ' + pet.pet_name }}
+            </button>
+        </div>
 
       </div>
     </div>
