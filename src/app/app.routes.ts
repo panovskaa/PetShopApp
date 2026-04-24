@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home';
 import { PageAdopt } from './pages/adopt/adopt';
 import { PageLostPet } from './pages/lost-pet/lost-pet';
 import { CreateListingComponent } from './pages/create-listing/create-listing';
+import { DonateComponent } from './pages/donate/donate';
 
 export const routes: Routes = [
   {
@@ -25,4 +26,8 @@ export const routes: Routes = [
     component: CreateListingComponent,
     title: 'Create Listing',
   },
+  { path: 'donate', 
+    component: DonateComponent,
+    title: 'Donate'
+  }
 ];

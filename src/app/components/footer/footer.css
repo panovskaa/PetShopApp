@@ -1,0 +1,49 @@
+app-footer {
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 5;
+}
+
+.kindred-footer {
+  width: 100%;
+  background: #D98AAA;
+  padding: 3rem 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.footer-info-grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 6rem;
+  align-items: start;
+  text-align: center;
+}
+
+.footer-col-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1.2rem;
+}
+
+.footer-col p {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.9rem;
+  color: #ffffff;
+  line-height: 2.2;
+  opacity: 0.9;
+}
+
+.footer-copyright {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.45);
+}

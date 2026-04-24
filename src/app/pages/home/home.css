@@ -17,7 +17,6 @@
   font-family: 'Inter', sans-serif;
   color: var(--dark);
   background: var(--white);
-  overflow: hidden;
   position: relative;
   width: 100%;
 }
@@ -116,13 +115,13 @@
 }
 
 .hero-bg {
-  position: fixed;        /* fixed to viewport so it stays behind both sections */
+  position: fixed;
   inset: 0;
   background: url('https://images.unsplash.com/photo-1574158622682-e40e69881006?w=1600&q=85') center/cover no-repeat;
   z-index: 0;
   transition: filter 0.08s linear;
   will-change: filter;
-  transform: scale(1.04); /* slight overscale to hide blur edges */
+  transform: scale(1.04);
 }
 
 .hero-dim {
@@ -139,7 +138,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 100px 48px 60px;
+  align-items: center;
+  padding: 100px 0 60px;
 }
 
 .hero-heading {
@@ -151,6 +151,7 @@
   line-height: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
 }
 .plus-sign {
@@ -185,7 +186,9 @@
   font-size: clamp(1.2rem, 2.8vw, 1.9rem);
   font-weight: 300;
   line-height: 1.5;
-  max-width: 880px;
+  width: 90%;
+  text-align: center;
+  padding: 0;
 }
 .hero-mission strong { font-weight: 700; }
 
@@ -222,6 +225,22 @@
   -webkit-backdrop-filter: blur(12px);
   transition: background 0.25s, transform 0.2s;
 }
+.service-card:hover .card-arrow {
+  width: 130px;
+  padding: 0 16px;
+  border-color: rgba(255,255,255,0.9);
+  gap: 8px;
+}
+
+.service-card:hover .arrow-text {
+  max-width: 100px;
+  opacity: 1;
+}
+
+.service-card:hover .arrow-icon {
+  transform: translateX(-2px);
+}
+
 .service-card:hover { background: rgba(255,255,255,0.28); transform: translateY(-4px); }
 
 .card-body { flex: 1; }
@@ -241,7 +260,7 @@
 .card-arrow {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
+  border-radius: 50px;
   border: 1.5px solid rgba(255,255,255,0.5);
   display: flex;
   align-items: center;
@@ -250,6 +269,25 @@
   font-size: 15px;
   margin-top: 24px;
   flex-shrink: 0;
+  overflow: hidden;
+  gap: 0;
+  transition: width 0.35s ease, padding 0.35s ease, border-color 0.3s ease, gap 0.35s ease;
+  cursor: pointer;
+}
+.arrow-icon {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.arrow-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.35s ease, opacity 0.2s ease 0.1s;
 }
 .card-choose-btn {
   display: inline-block;
@@ -506,3 +544,166 @@
   text-decoration: none;
 }
 .footer-bottom a:hover { color: white; }
+
+@media (max-width: 768px) {
+  .cards-row {
+    grid-template-columns: 1fr;
+    padding-top: 24px;
+  }
+
+  .service-card {
+    min-height: 220px;
+  }
+
+  .cards-section {
+    padding: 0 16px;
+  }
+}
+
+/* ── PET DECK ── */
+.deck-section {
+  background: var(--cream);
+  padding: 30px 0 140px;
+  overflow: visible;
+}
+
+.deck-title {
+  font-family: 'Fraunces', serif;
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--dark);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.deck-subtitle {
+  font-size: 14px;
+  color: var(--mid);
+  margin-bottom: 80px;
+  
+}
+
+.deck-wrap {
+  position: relative;
+  height: 460px;
+  width: 100%;
+  overflow: visible;
+  display: block;
+  margin-left: clamp(-200px, -6vw, -40px);
+}
+
+.deck-card {
+  position: absolute;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+  will-change: transform;
+  transform-origin: center bottom;
+}
+
+.deck-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.deck-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+  padding: 20px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.deck-info.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.deck-name {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+.deck-age {
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ── WE CARE SECTION ── */
+.care-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 32px;
+  background: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.care-text-anim {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.care-heading {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  font-weight: 900;
+  color: #D98AAA;
+  line-height: 1.1;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.care-text-anim.in-view .care-heading {
+  animation: careTextUp 0.6s ease-out 0.2s forwards;
+}
+
+@keyframes careTextUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.care-underline {
+  width: 100%;
+  height: 20px;
+  margin-top: -33px;
+  overflow: visible;
+}
+
+.care-underline svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.care-line-path {
+  stroke: none;
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: drawLine 0.9s ease-out 0.7s forwards;
+  opacity: 0;
+}
+.care-text-anim.in-view .care-line-path {
+  animation: careLineIn 0.9s ease-out 0.7s forwards;
+}
+
+@keyframes careLineIn {
+  0%   { opacity: 0; clip-path: inset(0 100% 0 0); }
+  10%  { opacity: 1; }
+  100% { opacity: 1; clip-path: inset(0 0% 0 0); }
+}

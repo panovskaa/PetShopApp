@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
 
-:root {
+:host {
   --pink:     #F2A7C3;
   --pink-dk:  #D98AAA;
   --navy:     #2C3347;
@@ -8,7 +8,7 @@
   --white:    #FFFFFF;
   --dark:     #1C1C1E;
   --mid:      #6B6B6B;
-  --cream:    #FFF8F2;
+  --cream:    #fff5ef;
   --error:    #E05C5C;
   --success:  #4CAF50;
 }
@@ -17,19 +17,20 @@
 
 .listing-wrap {
   font-family: 'Inter', sans-serif;
-  background: var(--cream);
   min-height: 100vh;
-  padding-top: 80px;
 }
-
+.listing-wrap,
+.listing-form {
+  background: transparent;
+}
 /* ── HERO BANNER ── */
 .listing-hero {
   background: linear-gradient(135deg, #fce4ec 0%, #fddcb5 100%);
-  padding: 60px 48px 48px;
+  padding: 120px 48px 100px;
   text-align: center;
 }
 .listing-flower {
-  font-size: 48px;
+  font-size: 72px;
   display: inline-block;
   animation: flowerOnce 0.7s ease-in-out forwards;
   margin-bottom: 16px;
@@ -65,11 +66,12 @@
 
 /* ── FIELDSET / SECTION ── */
 .form-section {
-  background: var(--white);
+  background: var(--white ) !important;
   border: none;
   border-radius: 24px;
   padding: 36px 32px;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.37);
+  isolation: isolate;
 }
 .section-legend {
   font-family: 'Fraunces', serif;
@@ -85,8 +87,7 @@
   border-bottom: 1.5px solid rgba(242,167,195,0.3);
 }
 .legend-num {
-  background: var(--pink);
-  color: white;
+  color: var(--dark);
   font-size: 12px;
   font-weight: 700;
   border-radius: 50%;
@@ -131,7 +132,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   color: var(--dark);
-  background: var(--cream);
+  background: var(--white ) !important;
   border: 1.5px solid rgba(0,0,0,0.1);
   border-radius: 12px;
   padding: 12px 16px;
@@ -203,9 +204,10 @@ select.field-input {
   height: 0;
 }
 .radio-input:checked + .radio-pill {
-  background: var(--pink);
-  color: white;
-  border-color: var(--pink);
+  background: rgba(242, 167, 195, 0.25);
+  color: var(--dark);
+  border-color: var(--pink-dk);
+  font-weight: 600;
 }
 .radio-input:focus + .radio-pill {
   box-shadow: 0 0 0 3px rgba(242,167,195,0.35);
@@ -218,7 +220,7 @@ select.field-input {
   font-size: 14px;
   font-weight: 500;
   color: var(--dark);
-  background: var(--cream);
+  background: var(--white);
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   cursor: pointer;
 }
@@ -230,78 +232,76 @@ select.field-input {
   flex-wrap: wrap;
   gap: 16px;
 }
-.checkbox-label {
+
+.check-pill {
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
   font-size: 14px;
   color: var(--dark);
+  user-select: none;
 }
-.checkbox-input {
+
+.check-pill input[type="checkbox"] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-.checkbox-custom {
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-  border: 1.5px solid rgba(0,0,0,0.15);
-  background: var(--cream);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+
+.check-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid rgba(0,0,0,0.2);
+  background: white;
   flex-shrink: 0;
   transition: background 0.2s, border-color 0.2s;
 }
-.checkbox-input:checked + .checkbox-custom {
-  background: var(--pink);
-  border-color: var(--pink);
-}
-.checkbox-input:checked + .checkbox-custom::after {
-  content: '✓';
-  color: white;
-  font-size: 12px;
-  font-weight: 700;
-}
-.checkbox-input:focus + .checkbox-custom {
-  box-shadow: 0 0 0 3px rgba(242,167,195,0.35);
+
+.check-pill input[type="checkbox"]:checked + .check-box {
+  background: #D98AAA !important;
+  border-color: #D98AAA !important;
 }
 
 /* ── PHOTOS ── */
 .photo-toggle {
-  display: flex;
-  gap: 8px;
+  display: inline-flex;
+  background: #F2A7C3;
+  border-radius: 50px;
+  padding: 4px;
+  gap: 0;
   margin-bottom: 20px;
 }
 .toggle-btn {
-  padding: 8px 20px;
+  padding: 10px 28px;
   border-radius: 50px;
-  border: 1.5px solid rgba(0,0,0,0.12);
-  background: var(--cream);
+  border: none;
+  background: transparent;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: var(--mid);
+  color: rgba(255,255,255,0.8);
   cursor: pointer;
   transition: all 0.2s;
 }
+
 .toggle-btn.active {
-  background: var(--pink);
-  border-color: var(--pink);
-  color: white;
+  background: white;
+  color: #D98AAA;
+  font-weight: 600;
 }
 .upload-zone {
-  border: 2px dashed rgba(242,167,195,0.5);
-  border-radius: 16px;
-  background: rgba(242,167,195,0.05);
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  background: var(--white);
   transition: border-color 0.2s, background 0.2s;
 }
+
 .upload-zone:hover {
-  border-color: var(--pink);
-  background: rgba(242,167,195,0.1);
+  border-color: #F2A7C3;
+  background: rgba(242,167,195,0.05);
 }
 .upload-label {
   display: flex;
@@ -316,13 +316,13 @@ select.field-input {
 .upload-icon { font-size: 32px; }
 .upload-label span {
   font-size: 14px;
-  font-weight: 500;
-  color: var(--dark);
+  font-weight: 600;
+  color: var(--dark) !important;
 }
-.upload-hint {
+.upload-label .upload-hint {
   font-size: 12px !important;
-  font-weight: 400 !important;
-  color: var(--mid) !important;
+  font-weight: 500 !important;
+  color: var(--navy) !important;
 }
 .upload-input {
   position: absolute;
@@ -336,6 +336,7 @@ select.field-input {
   align-items: flex-start;
 }
 .url-row .field-input { flex: 1; }
+
 .photo-previews {
   display: flex;
   flex-wrap: wrap;
@@ -386,7 +387,7 @@ select.field-input {
   color: var(--mid);
 }
 .btn-primary {
-  background: var(--pink);
+  background: #F2A7C3;
   color: white;
   border: none;
   border-radius: 50px;
@@ -401,8 +402,9 @@ select.field-input {
   transition: background 0.2s, transform 0.2s;
   box-shadow: 0 4px 16px rgba(242,167,195,0.4);
 }
+
 .btn-primary:hover:not(:disabled) {
-  background: var(--pink-dk);
+  background:#D98AAA;
   transform: translateY(-2px);
 }
 .btn-primary:disabled {
@@ -424,11 +426,6 @@ select.field-input {
 }
 .btn-secondary:hover:not(:disabled) { border-color: var(--pink); }
 .btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
-.submit-flower {
-  font-size: 18px;
-  display: inline-block;
-  animation: flowerOnce 0.7s ease-in-out forwards;
-}
 
 /* ── SUCCESS ── */
 .success-banner {
@@ -439,6 +436,9 @@ select.field-input {
   padding: 56px 40px;
   text-align: center;
   box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .success-icon {
   font-size: 56px;
@@ -459,3 +459,6 @@ select.field-input {
   line-height: 1.7;
   margin-bottom: 32px;
 }
+
+
+

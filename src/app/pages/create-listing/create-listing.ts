@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
+import { CommonModule} from '@angular/common';
+import emailjs from '@emailjs/browser';
+import { SupabaseService } from '../../services/supabase.service';
+import {FooterComponent} from '../../components/footer/footer';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -11,6 +14,8 @@ import {
   ValidationErrors
 } from '@angular/forms';
 
+
+
 function atLeastOnePhoto(control: AbstractControl): ValidationErrors | null {
   const arr = control as FormArray;
   return arr.length > 0 ? null : { noPhotos: true };
@@ -19,7 +24,7 @@ function atLeastOnePhoto(control: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'app-create-listing',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FooterComponent],
   templateUrl: './create-listing.html',
   styleUrls: ['./create-listing.css']
 })
@@ -27,7 +32,7 @@ export class CreateListingComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
   submitSuccess = false;
-  photoEntries: { preview: string; name: string }[] = [];
+  photoEntries: { preview: string; name: string; type: 'file' | 'url' }[] = [];
   photoInputMode: 'file' | 'url' = 'file';
   urlInput = new FormControl('', [
     Validators.pattern(/^https?:\/\/.+/)
@@ -37,7 +42,10 @@ export class CreateListingComponent implements OnInit {
   sizes = ['Small', 'Medium', 'Large'];
   genders = ['Male', 'Female'];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private supabaseService: SupabaseService
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -98,21 +106,34 @@ export class CreateListingComponent implements OnInit {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
+    
     Array.from(input.files).forEach(file => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.photos.push(new FormControl({ type: 'file', file, preview: e.target?.result }));
-        this.photoEntries.push({ preview: e.target?.result as string, name: file.name });
+        const previewUrl = e.target?.result as string;
+        this.photos.push(new FormControl({ type: 'file', file, preview: previewUrl }));
+        this.photoEntries.push({ 
+          preview: previewUrl, 
+          name: file.name,
+          type: 'file'
+        });
       };
       reader.readAsDataURL(file);
     });
+    
+    // Reset the input so the same file can be selected again
+    input.value = '';
   }
 
   addPhotoUrl(): void {
     if (this.urlInput.invalid || !this.urlInput.value) return;
     const url = this.urlInput.value;
     this.photos.push(new FormControl({ type: 'url', url, preview: url }));
-    this.photoEntries.push({ preview: url, name: url });
+    this.photoEntries.push({ 
+      preview: url, 
+      name: url,
+      type: 'url'
+    });
     this.urlInput.reset();
   }
 
@@ -121,17 +142,70 @@ export class CreateListingComponent implements OnInit {
     this.photoEntries.splice(index, 1);
   }
 
-  onSubmit(): void {
-    this.submitted = true;
-    if (this.form.invalid) {
-      const firstInvalid = document.querySelector('.field-error');
-      (firstInvalid as HTMLElement)?.focus();
-      return;
-    }
-    console.log(this.form.value);
+  async onSubmit(): Promise<void> {
+  this.submitted = true;
+  if (this.form.invalid) {
+    const firstInvalid = document.querySelector('.field-error');
+    (firstInvalid as HTMLElement)?.focus();
+    return;
+  }
+
+  const v = this.form.value;
+
+  const listing = {
+    pet_type:        v.petInfo.petType,
+    breed:           v.petInfo.breed,
+    pet_name:        v.petInfo.name,
+    age:             v.petInfo.age,
+    size:            v.petInfo.size,
+    gender:          v.petInfo.gender,
+    color:           v.petInfo.color,
+    has_certificate: v.healthInfo.hasCertificate,
+    is_vaccinated:   v.healthInfo.isVaccinated,
+    is_neutered:     v.healthInfo.isNeutered,
+    health_notes:    v.healthInfo.healthNotes,
+    photos:          this.photoEntries.map(p => p.preview),
+    title:           v.listingInfo.title,
+    description:     v.listingInfo.description,
+    location:        v.listingInfo.location,
+    rehoming_fee:    v.listingInfo.rehomingFee,
+    contact_email:   v.listingInfo.contactEmail,
+    contact_phone:   v.listingInfo.contactPhone
+  };
+
+  try {
+    await this.supabaseService.createListing(listing);
     this.submitSuccess = true;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (err) {
+    console.error('Failed to save listing:', err);
+    alert('Something went wrong. Please try again.');
   }
+
+  emailjs.send(
+    'service_71cb1yl',
+    'template_ai47mrm',
+    {
+      to_email:      v.listingInfo.contactEmail,
+      pet_name:      v.petInfo.name,
+      pet_type:      v.petInfo.petType,
+      breed:         v.petInfo.breed,
+      age:           v.petInfo.age,
+      location:      v.listingInfo.location,
+      description:   v.listingInfo.description,
+      contact_email: v.listingInfo.contactEmail,
+      contact_phone: v.listingInfo.contactPhone || 'N/A',
+      rehoming_fee:  v.listingInfo.rehomingFee
+    },
+    'rB2gw9rizcyqb9XWc'
+  ).then(() => {
+    this.submitSuccess = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }).catch((err) => {
+    console.error('Email error:', err);
+    alert('Something went wrong sending the email. Please try again.');
+  });
+}
 
   resetForm(): void {
     this.submitted = false;
@@ -139,5 +213,11 @@ export class CreateListingComponent implements OnInit {
     this.photoEntries = [];
     while (this.photos.length) this.photos.removeAt(0);
     this.form.reset({ listingInfo: { rehomingFee: 0 } });
+  }
+
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  triggerFileInput(): void {
+    this.fileInput.nativeElement.click();
   }
 }

@@ -1,0 +1,208 @@
+.donate-wrap {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fce4ec 0%, #fddcb5 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 100px 24px 60px;
+  flex-wrap: wrap;
+}
+
+.donate-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+}
+
+/* PROFILE */
+.donate-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.profile-name {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: #1C1C1E;
+}
+.profile-supporters {
+  font-size: 13px;
+  color: #6B6B6B;
+  margin-top: 2px;
+}
+
+/* ABOUT */
+.donate-about {
+  margin-bottom: 28px;
+}
+.about-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1C1C1E;
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+.about-text {
+  font-size: 14px;
+  color: #6B6B6B;
+  line-height: 1.7;
+}
+
+/* SUPPORTERS */
+.recent-supporters { margin-top: 8px; }
+.supporter-list { display: flex; flex-direction: column; gap: 20px; margin-top: 12px; }
+.supporter-item { display: flex; gap: 12px; align-items: flex-start; }
+.supporter-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fce4ec;
+  color: #D98AAA;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.supporter-info { display: flex; flex-direction: column; gap: 2px; }
+.supporter-name { font-size: 14px; font-weight: 600; color: #1C1C1E; }
+.supporter-action { font-size: 13px; color: #6B6B6B; }
+.supporter-message {
+  font-size: 13px;
+  color: #1C1C1E;
+  background: #f7f7f7;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-top: 6px;
+  line-height: 1.6;
+}
+.see-more-btn {
+  background: none;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-size: 13px;
+  color: #6B6B6B;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: border-color 0.2s;
+}
+.see-more-btn:hover { border-color: #D98AAA; color: #D98AAA; }
+
+/* BUY CARD */
+.buy-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1C1C1E;
+  margin-bottom: 24px;
+}
+.amount-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.coffee-icon { font-size: 32px; }
+.times { font-size: 18px; color: #6B6B6B; }
+.amount-pills { display: flex; gap: 8px; }
+.amount-pill {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  background: white;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1C1C1E;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.amount-pill.active {
+  background: #D98AAA;
+  border-color: #D98AAA;
+  color: white;
+}
+.amount-pill:hover:not(.active) { border-color: #D98AAA; }
+
+.donate-input {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1C1C1E;
+  background: #f7f7f7;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  padding: 12px 16px;
+  outline: none;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.donate-input:focus { border-color: #D98AAA; }
+.donate-textarea { resize: none; }
+
+.monthly-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #1C1C1E;
+  cursor: pointer;
+  margin-bottom: 20px;
+  user-select: none;
+}
+.monthly-check input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.check-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid rgba(0,0,0,0.2);
+  background: white;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+.monthly-check input[type="checkbox"]:checked + .check-box {
+  background: #D98AAA;
+  border-color: #D98AAA;
+}
+
+.support-btn {
+  width: 100%;
+  background: #D98AAA;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(217,138,170,0.35);
+}
+.support-btn:hover { background: #c2779a; transform: translateY(-1px); }
+
+.thankyou-msg {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 15px;
+  color: #D98AAA;
+  font-weight: 600;
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

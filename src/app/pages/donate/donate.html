@@ -1,0 +1,79 @@
+<div class="donate-wrap">
+  <div class="donate-card">
+
+    <div class="donate-profile">
+      <div>
+        <h1 class="profile-name">Kindred</h1>
+        <p class="profile-supporters">{{ supporterCount }} supporters</p>
+      </div>
+    </div>
+
+    <div class="donate-about">
+      <p class="about-title">About Kindred</p>
+      <p class="about-text">A platform connecting loving families with animals ready to be adopted. Every coffee helps keep Kindred running and more pets finding their forever homes. 🌸</p>
+    </div>
+
+    <div class="recent-supporters" *ngIf="supporters.length > 0">
+      <p class="about-title">Recent supporters</p>
+      <div class="supporter-list">
+        <div *ngFor="let s of visibleSupporters" class="supporter-item">
+          <div class="supporter-avatar">{{ s.name[0].toUpperCase() }}</div>
+          <div class="supporter-info">
+            <span class="supporter-name">{{ s.name }}</span>
+            <span class="supporter-action">bought {{ s.count === 1 ? 'a coffee' : s.count + ' coffees' }}.</span>
+            <p *ngIf="s.message" class="supporter-message">{{ s.message }}</p>
+          </div>
+        </div>
+      </div>
+      <button *ngIf="supporters.length > 3" class="see-more-btn" (click)="toggleShowAll()">
+        {{ showAll ? 'Show less ↑' : 'See more ↓' }}
+      </button>
+    </div>
+
+  </div>
+
+  <div class="donate-card buy-card">
+    <p class="buy-title">Buy Kindred a coffee ☕</p>
+
+    <div class="amount-row">
+      <span class="coffee-icon">☕</span>
+      <span class="times">×</span>
+      <div class="amount-pills">
+        <button
+          *ngFor="let n of [1, 3, 5, 10]"
+          class="amount-pill"
+          [class.active]="selectedCount === n"
+          (click)="selectedCount = n"
+        >{{ n }}</button>
+      </div>
+    </div>
+
+    <input
+      class="donate-input"
+      type="text"
+      placeholder="Name or @yoursocial"
+      [(ngModel)]="donorName"
+    />
+
+    <textarea
+      class="donate-input donate-textarea"
+      placeholder="Say something nice..."
+      [(ngModel)]="donorMessage"
+      rows="3"
+    ></textarea>
+
+    <label class="monthly-check">
+      <input type="checkbox" [(ngModel)]="makeMonthly" />
+      <span class="check-box"></span>
+      Make this monthly
+    </label>
+
+    <button class="support-btn" (click)="onSupport()">
+      Support ${{ selectedCount * 5 }}
+    </button>
+
+    <div *ngIf="thankYou" class="thankyou-msg">
+      🌸 Thank you so much, {{ donorName || 'friend' }}!
+    </div>
+  </div>
+</div>

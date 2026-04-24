@@ -1,2 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'bootstrap/dist/css/bootstrap.css';
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fce4ec 0%, #fddcb5 100%);
+  background-attachment: fixed;
+}

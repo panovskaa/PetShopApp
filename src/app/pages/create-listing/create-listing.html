@@ -209,22 +209,22 @@
         </legend>
 
         <div class="checkbox-grid">
-          <label class="checkbox-label">
-            <input type="checkbox" formControlName="hasCertificate" class="checkbox-input" />
-            <span class="checkbox-custom" aria-hidden="true"></span>
-            Has health certificate
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" formControlName="isVaccinated" class="checkbox-input" />
-            <span class="checkbox-custom" aria-hidden="true"></span>
-            Vaccinated
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" formControlName="isNeutered" class="checkbox-input" />
-            <span class="checkbox-custom" aria-hidden="true"></span>
-            Neutered / Spayed
-          </label>
-        </div>
+  <label class="check-pill">
+    <input type="checkbox" formControlName="hasCertificate" />
+    <span class="check-box"></span>
+    Has health certificate
+  </label>
+  <label class="check-pill">
+    <input type="checkbox" formControlName="isVaccinated" />
+    <span class="check-box"></span>
+    Vaccinated
+  </label>
+  <label class="check-pill">
+    <input type="checkbox" formControlName="isNeutered" />
+    <span class="check-box"></span>
+    Neutered / Spayed
+  </label>
+</div>
 
         <div class="field-group" style="margin-top: 20px;">
           <label for="healthNotes" class="field-label">Health Notes</label>
@@ -249,92 +249,82 @@
       </fieldset>
 
       <!-- ── SECTION 3: PHOTOS ── -->
-      <fieldset class="form-section">
-        <legend class="section-legend">
-          <span class="legend-num">03</span> Photos
-          <span class="legend-hint">(at least one required)</span>
-        </legend>
+<fieldset class="form-section">
+  <legend class="section-legend">
+    <span class="legend-num">03</span> Photos
+    <span class="legend-hint">(at least one required)</span>
+  </legend>
 
-        <!-- Toggle -->
-        <div class="photo-toggle" role="group" aria-label="Photo input method">
-          <button
-            type="button"
-            class="toggle-btn"
-            [class.active]="photoInputMode === 'file'"
-            (click)="photoInputMode = 'file'"
-            aria-pressed="{{ photoInputMode === 'file' }}"
-          >Upload File</button>
-          <button
-            type="button"
-            class="toggle-btn"
-            [class.active]="photoInputMode === 'url'"
-            (click)="photoInputMode = 'url'"
-            aria-pressed="{{ photoInputMode === 'url' }}"
-          >Add URL</button>
-        </div>
+  <!-- Toggle -->
+  <div class="photo-toggle" role="group" aria-label="Photo input method">
+    <button
+      type="button"
+      class="toggle-btn"
+      [class.active]="photoInputMode === 'file'"
+      (click)="photoInputMode = 'file'"
+      [attr.aria-pressed]="photoInputMode === 'file'"
+    >Upload File</button>
+    <button
+      type="button"
+      class="toggle-btn"
+      [class.active]="photoInputMode === 'url'"
+      (click)="photoInputMode = 'url'"
+      [attr.aria-pressed]="photoInputMode === 'url'"
+    >Add URL</button>
+  </div>
 
-        <!-- File upload -->
-        <div *ngIf="photoInputMode === 'file'" class="upload-zone">
-          <label for="photoFile" class="upload-label">
-            <span class="upload-icon">📷</span>
-            <span>Click to upload photos</span>
-            <span class="upload-hint">JPG, PNG, WEBP accepted</span>
-            <input
-              id="photoFile"
-              type="file"
-              accept="image/*"
-              multiple
-              class="upload-input"
-              aria-label="Upload pet photos"
-              (change)="onFileSelected($event)"
-            />
-          </label>
-        </div>
+  <!-- File upload -->
+  <div *ngIf="photoInputMode === 'file'" class="upload-zone">
+    <label for="photoFile" class="upload-label">
+      <span class="upload-icon">📷</span>
+      <span>Click to upload photos</span>
+      <span class="upload-hint">JPG, PNG, WEBP accepted</span>
+      <input
+        #fileInput
+        id="photoFile"
+        type="file"
+        accept="image/*"
+        multiple
+        class="upload-input"
+        (change)="onFileSelected($event)"
+      />
+    </label>
+  </div>
 
-        <!-- URL input -->
-        <div *ngIf="photoInputMode === 'url'" class="url-row">
-          <input
-            type="url"
-            [formControl]="urlInput"
-            class="field-input"
-            placeholder="https://example.com/photo.jpg"
-            aria-label="Photo URL"
-            [class.input-error]="urlInput.invalid && urlInput.dirty"
-          />
-          <button
-            type="button"
-            class="btn-secondary"
-            (click)="addPhotoUrl()"
-            [disabled]="urlInput.invalid || !urlInput.value"
-          >Add</button>
-        </div>
+  <!-- URL input -->
+  <div *ngIf="photoInputMode === 'url'" class="url-row">
+    <input
+      type="url"
+      [formControl]="urlInput"
+      class="field-input"
+      placeholder="https://example.com/photo.jpg"
+      aria-label="Photo URL"
+      [class.input-error]="urlInput.invalid && urlInput.dirty"
+    />
+    <button
+      type="button"
+      class="btn-secondary"
+      (click)="addPhotoUrl()"
+      [disabled]="urlInput.invalid || !urlInput.value"
+    >Add</button>
+  </div>
 
-        <!-- Previews -->
-        <div *ngIf="photoEntries.length > 0" class="photo-previews" role="list" aria-label="Added photos">
-          <div
-            *ngFor="let photo of photoEntries; let i = index"
-            class="photo-preview"
-            role="listitem"
-          >
-            <img [src]="photo.preview" [alt]="'Photo ' + (i + 1)" class="preview-img" />
-            <button
-              type="button"
-              class="remove-photo"
-              (click)="removePhoto(i)"
-              [attr.aria-label]="'Remove photo ' + (i + 1)"
-            >×</button>
-          </div>
-        </div>
+  <!-- Previews at bottom -->
+  <div *ngIf="photoEntries.length > 0" class="photo-previews" role="list">
+    <div *ngFor="let photo of photoEntries; let i = index" class="photo-preview" role="listitem">
+      <img [src]="photo.preview" [alt]="'Photo ' + (i + 1)" class="preview-img" />
+      <button type="button" class="remove-photo" (click)="removePhoto(i)" [attr.aria-label]="'Remove photo ' + (i + 1)">×</button>
+    </div>
+  </div>
 
-        <span
-          *ngIf="submitted && photos.invalid"
-          class="field-error"
-          role="alert"
-          aria-live="polite"
-        >Please add at least one photo.</span>
+  <span
+    *ngIf="submitted && photos.invalid"
+    class="field-error"
+    role="alert"
+    aria-live="polite"
+  >Please add at least one photo.</span>
 
-      </fieldset>
-
+</fieldset>
       <!-- ── SECTION 4: LISTING INFO ── -->
       <fieldset formGroupName="listingInfo" class="form-section">
         <legend class="section-legend">
@@ -501,8 +491,7 @@
           class="btn-primary btn-submit"
           [disabled]="form.invalid && submitted"
           [attr.aria-disabled]="form.invalid && submitted"
-        >
-          <span class="submit-flower">🌸</span>
+        >          
           Create Listing
         </button>
       </div>
@@ -511,3 +500,4 @@
   </div>
 
 </main>
+<app-footer></app-footer>

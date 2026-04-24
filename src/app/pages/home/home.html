@@ -1,6 +1,4 @@
 <div class="kindered-wrap">
-
-  <!-- HERO -->
   <!-- HERO -->
 <div class="hero">
   <div class="hero-bg" [style.filter]="getHeroBlur()">
@@ -11,107 +9,52 @@
       <span class="plus-sign">🌸</span><span class="letter">K</span><span class="letter">i</span><span class="letter">n</span><span class="letter">d</span><span class="letter">r</span><span class="letter">e</span><span class="letter">d</span>
     </div>
     <div class="hero-mission">
-      Expertise meets compassion at <strong>Kindred Pet Care</strong>. Our dedicated team
-      is here to provide your furry companions with a comprehensive range of
-      services, ensuring their well-being and comfort.
+      Find your perfect companion or help a pet find their forever home.
+      <strong>Kindred</strong> connects loving families with animals ready to be adopted.
     </div>
   </div>
 </div>
 
-  <!-- CARDS SECTION -->
-  <div class="cards-section">
-    <div class="cards-row">
-  <div class="service-card">
-    <div class="card-body">
-      <h3>Adopt a Pet</h3>
-      <p>Browse pets ready for their forever home and start your adoption journey today. Every animal deserves a loving family.</p>
+<!-- WE CARE ANIMATION -->
+<div class="care-section">
+  <div class="care-text-anim">
+    <h3 class="care-heading">Choose a friend.</h3>
+    <div class="care-underline">
+      <svg viewBox="0 0 400 37" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <path class="care-line-path" d="
+          M 13,26
+          C -41,25 -68,33 -86,39
+          L -86,37
+          C -68,31 -41,22 13,23
+          C 49,24 77,23 86,23
+          L 86,25
+          C 77,25 49,26 13,26z
+        " fill="#D98AAA"  transform="translate(200, 0) scale(2.3, 2.3)"/>
+      </svg>
     </div>
-    <div class="card-arrow">↗</div>
-  </div>
-  <div class="service-card">
-    <div class="card-body">
-      <h3>List a Pet</h3>
-      <p>Connect your pet with a caring family who will love them. Our plans include everything you need to find them a perfect home.</p>
-    </div>
-    <div class="card-choose-btn">Find a home</div>
-  </div>
-  <div class="service-card">
-    <div class="card-body">
-      <h3>Create a Listing</h3>
-      <p>Set up a detailed listing for your pet and reach thousands of loving families in the Kindred community.</p>
-    </div>
-    <div class="card-arrow">↗</div>
   </div>
 </div>
-  </div>
 
-  <!-- ABOUT SECTION -->
-  <div class="about-section">
-    <div class="about-left">
-      <div class="about-card" *ngFor="let card of aboutCards">
-        <h3>{{ card.title }}</h3>
-        <p>{{ card.text }}</p>
-      </div>
-    </div>
-    <div class="about-center">
-      <div class="logo-anim">
-        <div class="circle-outline">+</div>
-        <div class="circle-filled">K</div>
-      </div>
-    </div>
-    <div class="about-right">
-      <div class="about-photo"></div>
-    </div>
-  </div>
+<!-- PET DECK SECTION -->
+<div class="deck-section">
+  <h2 class="deck-title">Meet the Pack</h2>
+  <p class="deck-subtitle">Hover over a card to meet them</p>
 
-  <!-- TEAM SECTION -->
-  <div class="team-section">
-    <h2>Caring Team</h2>
-    <p>We are proud to connect pets with a community of skilled, compassionate people who share the same values — a genuine love for animals and a passion for making a difference.</p>
-    <div class="team-photos">
-      <div class="team-photo">🧑‍⚕️</div>
-      <div class="team-photo">👩‍💼</div>
-      <div class="team-photo">👨‍💻</div>
-      <div class="team-photo">👩‍🎨</div>
-    </div>
-  </div>
-
-  <!-- COMMUNITY -->
-  <div class="community-section">
-    <h2>Kindred<br>Community</h2>
-    <div class="cat-anim">🐱</div>
-    <p>A thriving space for pet owners who share common values and a deep love for their companions.</p>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="footer-section">
-    <div class="footer-top">
-      <div class="footer-contact">
-        <div class="footer-label">Contact</div>
-        <p><a href="#">+389 2 000 0000</a><br><a href="#">hello&#64;kindered.com</a></p>
-        <div class="social-row">
-          <div class="social-pill">f</div>
-          <div class="social-pill">in</div>
-          <div class="social-pill">ig</div>
-        </div>
-      </div>
-      <div class="footer-links">
-        <div class="footer-label">Navigate</div>
-        <p>
-          <a href="#">Adopt Pet</a><br>
-          <a href="#">Create Listing</a><br>
-          <a href="#">Lost Pet</a><br>
-          <a href="#">Community</a>
-        </p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 +KINDERED</span>
-      <div style="display:flex;gap:16px;">
-        <a href="#">Terms of Use</a>
-        <a href="#">Privacy Policy</a>
+  <div class="deck-wrap" #deckWrap>
+    <div
+      *ngFor="let dog of dogs; let i = index"
+      class="deck-card"
+      [ngStyle]="getCardStyle(i)"
+      (mouseenter)="hoveredIndex = i"
+      (mouseleave)="hoveredIndex = null"
+    >
+      <img [src]="getDogPhoto(dog)" [alt]="dog.pet_name" class="deck-img" />
+      <div class="deck-info" [class.visible]="hoveredIndex === i">
+        <span class="deck-name">{{ dog.pet_name }}</span>
+        <span class="deck-age">{{ dog.age }} yr{{ dog.age !== 1 ? 's' : '' }}</span>
       </div>
     </div>
   </div>
-
 </div>
+</div>
+<app-footer></app-footer>

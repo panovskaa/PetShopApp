@@ -23,6 +23,18 @@ export class Navbar {
   }
 
   closeMenu(): void {
-  this.menuOpen = false;
+  if (window.matchMedia('(hover: hover)').matches) {
+    this.menuOpen = false;
   }
+  }
+
+  onMenuLinkTouch(event: TouchEvent): void {
+  const el = event.currentTarget as HTMLElement;
+  el.style.color = '#F2A7C3';
+  el.style.paddingLeft = '10px';
+  setTimeout(() => {
+    el.style.color = '';
+    el.style.paddingLeft = '';
+  }, 300);
+}
 }
