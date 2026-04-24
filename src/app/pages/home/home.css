@@ -224,6 +224,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: background 0.25s, transform 0.2s;
+
 }
 .service-card:hover .card-arrow {
   width: 130px;
@@ -238,10 +239,14 @@
 }
 
 .service-card:hover .arrow-icon {
-  transform: translateX(-2px);
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
 }
 
 .service-card:hover { background: rgba(255,255,255,0.28); transform: translateY(-4px); }
+
+
 
 .card-body { flex: 1; }
 .service-card h3 {
@@ -276,7 +281,7 @@
 }
 .arrow-icon {
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .arrow-text {
@@ -563,7 +568,7 @@
 /* ── PET DECK ── */
 .deck-section {
   background: var(--cream);
-  padding: 30px 0 140px;
+  padding: 10px 0 140px;
   overflow: visible;
 }
 
@@ -647,7 +652,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 32px;
+  padding: 20px 32px 0px;
   background: transparent;
   position: relative;
   z-index: 2;

@@ -1,62 +1,101 @@
 <div class="kindered-wrap">
+
   <!-- HERO -->
-<div class="hero">
-  <div class="hero-bg" [style.filter]="getHeroBlur()">
-    <div class="hero-dim" [style.background]="getHeroDim()"></div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-heading">
-      <span class="plus-sign">🌸</span><span class="letter">K</span><span class="letter">i</span><span class="letter">n</span><span class="letter">d</span><span class="letter">r</span><span class="letter">e</span><span class="letter">d</span>
+  <div class="hero">
+    <div class="hero-bg" [style.filter]="getHeroBlur()">
+      <div class="hero-dim" [style.background]="getHeroDim()"></div>
     </div>
-    <div class="hero-mission">
-      Find your perfect companion or help a pet find their forever home.
-      <strong>Kindred</strong> connects loving families with animals ready to be adopted.
-    </div>
-  </div>
-</div>
-
-<!-- WE CARE ANIMATION -->
-<div class="care-section">
-  <div class="care-text-anim">
-    <h3 class="care-heading">Choose a friend.</h3>
-    <div class="care-underline">
-      <svg viewBox="0 0 400 37" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-        <path class="care-line-path" d="
-          M 13,26
-          C -41,25 -68,33 -86,39
-          L -86,37
-          C -68,31 -41,22 13,23
-          C 49,24 77,23 86,23
-          L 86,25
-          C 77,25 49,26 13,26z
-        " fill="#D98AAA"  transform="translate(200, 0) scale(2.3, 2.3)"/>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- PET DECK SECTION -->
-<div class="deck-section">
-  <h2 class="deck-title">Meet the Pack</h2>
-  <p class="deck-subtitle">Hover over a card to meet them</p>
-
-  <div class="deck-wrap" #deckWrap>
-    <div
-      *ngFor="let dog of dogs; let i = index"
-      class="deck-card"
-      [ngStyle]="getCardStyle(i)"
-      (mouseenter)="hoveredIndex = i"
-      (mouseleave)="hoveredIndex = null"
-      [routerLink]="['/pet', dog.id]"
-      style="cursor: pointer;"
-    >
-      <img [src]="getDogPhoto(dog)" [alt]="dog.pet_name" class="deck-img" />
-      <div class="deck-info" [class.visible]="hoveredIndex === i">
-        <span class="deck-name">{{ dog.pet_name }}</span>
-        <span class="deck-age">{{ dog.age }} yr{{ dog.age !== 1 ? 's' : '' }}</span>
+    <div class="hero-content">
+      <div class="hero-heading">
+        <span class="plus-sign">🌸</span><span class="letter">K</span><span class="letter">i</span><span class="letter">n</span><span class="letter">d</span><span class="letter">r</span><span class="letter">e</span><span class="letter">d</span>
+      </div>
+      <div class="hero-mission">
+        Find your perfect companion or help a pet find their forever home.
+        <strong>Kindred</strong> connects loving families with animals ready to be adopted.
       </div>
     </div>
   </div>
+
+  <!-- CARDS SECTION -->
+  <div class="cards-section">
+    <div class="cards-row">
+      <div class="service-card">
+  <div class="card-body">
+    <h3>Adopt a Pet</h3>
+    <p>Browse pets ready for their forever home and start your adoption journey today. Every animal deserves a loving family.</p>
+  </div>
+  <div class="card-arrow">
+    <span class="arrow-icon">↗</span>
+    <span class="arrow-text">Adopt</span>
+  </div>
 </div>
+
+<div class="service-card">
+  <div class="card-body">
+    <h3>List a Pet</h3>
+    <p>Connect your pet with a caring family who will love them. Our plans include everything you need to find them a perfect home.</p>
+  </div>
+  <div class="card-arrow">
+    <span class="arrow-icon">↗</span>
+    <span class="arrow-text">List</span>
+  </div>
+</div>
+
+<div class="service-card" routerLink="/create-listing">
+  <div class="card-body">
+    <h3>Create a Listing</h3>
+    <p>Set up a detailed listing for your pet and reach thousands of loving families in the Kindred community.</p>
+  </div>
+  <div class="card-arrow">
+    <span class="arrow-icon">↗</span>
+    <span class="arrow-text">Create</span>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <!-- WE CARE ANIMATION -->
+  <div class="care-section">
+    <div class="care-text-anim">
+      <h3 class="care-heading">Choose a friend.</h3>
+      <div class="care-underline">
+        <svg viewBox="0 0 400 37" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <path class="care-line-path" d="
+            M 13,26
+            C -41,25 -68,33 -86,39
+            L -86,37
+            C -68,31 -41,22 13,23
+            C 49,24 77,23 86,23
+            L 86,25
+            C 77,25 49,26 13,26z
+          " fill="#D98AAA" transform="translate(200, 0) scale(2.3, 2.3)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- PET DECK SECTION -->
+  <div class="deck-section">
+    <h2 class="deck-title">Meet the Pack</h2>
+    <p class="deck-subtitle">Hover over a card to meet them</p>
+    <div class="deck-wrap" #deckWrap>
+      <div
+        *ngFor="let dog of dogs; let i = index"
+        class="deck-card"
+        [ngStyle]="getCardStyle(i)"
+        (mouseenter)="hoveredIndex = i"
+        (mouseleave)="hoveredIndex = null"
+        [routerLink]="['/pet', dog.id]"
+        style="cursor: pointer;"
+      >
+        <img [src]="getDogPhoto(dog)" [alt]="dog.pet_name" class="deck-img" />
+        <div class="deck-info" [class.visible]="hoveredIndex === i">
+          <span class="deck-name">{{ dog.pet_name }}</span>
+          <span class="deck-age">{{ dog.age }} yr{{ dog.age !== 1 ? 's' : '' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 <app-footer></app-footer>
