@@ -34,4 +34,5 @@ export const routes: Routes = [
   { path: 'pet/:id', 
     component: PetDetailComponent, 
     title: 'Pet Details' },
+    { path: '**', redirectTo: '' }
 ];
