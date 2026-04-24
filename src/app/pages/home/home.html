@@ -47,6 +47,8 @@
       [ngStyle]="getCardStyle(i)"
       (mouseenter)="hoveredIndex = i"
       (mouseleave)="hoveredIndex = null"
+      [routerLink]="['/pet', dog.id]"
+      style="cursor: pointer;"
     >
       <img [src]="getDogPhoto(dog)" [alt]="dog.pet_name" class="deck-img" />
       <div class="deck-info" [class.visible]="hoveredIndex === i">

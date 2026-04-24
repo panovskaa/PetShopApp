@@ -1,0 +1,101 @@
+<div class="pet-detail-wrap">
+
+  <!-- LOADING -->
+  <div *ngIf="loading" class="pet-loading">
+    <span class="loading-flower">🌸</span>
+  </div>
+
+  <!-- ADOPTED SUCCESS -->
+  <div *ngIf="adopted" class="adopted-banner">
+    <div class="adopted-icon">🌸</div>
+    <h2>Congratulations!</h2>
+    <p>You've given {{ pet.pet_name }} a forever home. Thank you for adopting!</p>
+    <button class="btn-back" (click)="goBack()">Back to home</button>
+  </div>
+
+  <!-- PET DETAIL -->
+  <div *ngIf="!loading && !adopted && pet" class="pet-detail">
+
+    <button class="btn-back-top" (click)="goBack()">← Back</button>
+
+    <div class="pet-layout">
+
+      <!-- PHOTOS -->
+      <div class="pet-photos">
+        <div class="photo-main">
+          <img [src]="photos[selectedPhoto]" [alt]="pet.pet_name" class="main-img" />
+        </div>
+        <div class="photo-thumbs" *ngIf="photos.length > 1">
+          <img
+            *ngFor="let p of photos; let i = index"
+            [src]="p"
+            [alt]="pet.pet_name"
+            class="thumb-img"
+            [class.active]="selectedPhoto === i"
+            (click)="selectedPhoto = i"
+          />
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div class="pet-info">
+        <div class="pet-header">
+          <h1 class="pet-name">{{ pet.pet_name }}</h1>
+          <span class="pet-type-badge">{{ pet.pet_type }}</span>
+        </div>
+
+        <div class="pet-tags">
+          <span class="tag">{{ pet.breed }}</span>
+          <span class="tag">{{ pet.age }} yr{{ pet.age !== 1 ? 's' : '' }}</span>
+          <span class="tag">{{ pet.size }}</span>
+          <span class="tag" *ngIf="pet.gender">{{ pet.gender }}</span>
+          <span class="tag" *ngIf="pet.color">{{ pet.color }}</span>
+        </div>
+
+        <div class="pet-section" *ngIf="pet.description">
+          <p class="section-label">About</p>
+          <p class="section-text">{{ pet.description }}</p>
+        </div>
+
+        <div class="pet-section">
+          <p class="section-label">Health</p>
+          <div class="health-pills">
+            <span class="health-pill" *ngIf="pet.is_vaccinated">✓ Vaccinated</span>
+            <span class="health-pill" *ngIf="pet.is_neutered">✓ Neutered / Spayed</span>
+            <span class="health-pill" *ngIf="pet.has_certificate">✓ Health Certificate</span>
+          </div>
+          <p class="section-text" *ngIf="pet.health_notes">{{ pet.health_notes }}</p>
+        </div>
+
+        <div class="pet-section" *ngIf="pet.location">
+          <p class="section-label">Location</p>
+          <p class="section-text">{{ pet.location }}</p>
+        </div>
+
+        <div class="pet-section" *ngIf="pet.rehoming_fee">
+          <p class="section-label">Rehoming Fee</p>
+          <p class="section-text">{{ pet.rehoming_fee }} MKD</p>
+        </div>
+
+        <div class="pet-section">
+          <p class="section-label">Contact</p>
+          <p class="section-text" *ngIf="pet.contact_email">{{ pet.contact_email }}</p>
+          <p class="section-text" *ngIf="pet.contact_phone">{{ pet.contact_phone }}</p>
+        </div>
+
+        <button class="btn-adopt" (click)="adopt()" [disabled]="adopting">
+          {{ adopting ? 'Processing...' : '🌸 Adopt ' + pet.pet_name }}
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- NOT FOUND -->
+  <div *ngIf="!loading && !pet && !adopted" class="pet-not-found">
+    <p>Pet not found.</p>
+    <button class="btn-back" (click)="goBack()">Go back</button>
+  </div>
+
+  <app-footer></app-footer>
+</div>

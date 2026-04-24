@@ -27,4 +27,22 @@ export class SupabaseService {
   if (error) throw error;
   return data;
   }
+
+  async getListingById(id: string) {
+  const { data, error } = await this.supabase
+    .from('listings')
+    .select('*')
+    .eq('id', id)
+    .single();
+  if (error) throw error;
+  return data;
+}
+
+async deleteListing(id: string) {
+  const { error } = await this.supabase
+    .from('listings')
+    .delete()
+    .eq('id', id);
+  if (error) throw error;
+}
 }

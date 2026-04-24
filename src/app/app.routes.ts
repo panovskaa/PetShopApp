@@ -4,6 +4,7 @@ import { PageAdopt } from './pages/adopt/adopt';
 import { PageLostPet } from './pages/lost-pet/lost-pet';
 import { CreateListingComponent } from './pages/create-listing/create-listing';
 import { DonateComponent } from './pages/donate/donate';
+import { PetDetailComponent } from './pages/pet-detail/pet-detail';
 
 export const routes: Routes = [
   {
@@ -29,5 +30,8 @@ export const routes: Routes = [
   { path: 'donate', 
     component: DonateComponent,
     title: 'Donate'
-  }
+  },
+  { path: 'pet/:id', 
+    component: PetDetailComponent, 
+    title: 'Pet Details' },
 ];
